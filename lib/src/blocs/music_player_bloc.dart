@@ -4,7 +4,7 @@ import '../models/music_player_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MusicPlayerBloc {
-  final _musicPlayerPublisher = BehaviorSubject<MusicPlayerModel>();
+  final _musicPlayerPublisher = ReplaySubject<MusicPlayerModel>();
 
   Stream<MusicPlayerModel> get musicPlayer => _musicPlayerPublisher.stream;
 
