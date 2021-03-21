@@ -17,55 +17,47 @@ class MusicListState extends State<MusicList> {
   @override
   void initState() {
     super.initState();
-    musicMetadataBloc.fetchAllMusicMetadata('Afgan');
   }
 
   @override
   void dispose() {
-    musicMetadataBloc.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final viewModel = Provider.of<MusicListViewModel>(context, listen: false);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Popular Music'),
-      ),
-      body: StreamBuilder(
-        stream: Rx.combineLatest2(
-          musicMetadataBloc.allMusicMetadata,
-          musicPlayerBloc.musicPlayer.shareValueSeeded(null),
-          (SearchModel result, MusicPlayerModel musicPlayer) {
-            if (result.results.length > 0) {
-              return SearchModel(
-                  result.resultCount,
-                  result.results.map((MusicMetadata metadata) {
-                    if (musicPlayer != null &&
-                        musicPlayer.selectedMusic != null) {
-                      print(
-                          'Selected music ${musicPlayer.selectedMusic?.trackName}');
-                      if (metadata.trackId ==
-                          musicPlayer.selectedMusic?.trackId) {
-                        return MusicMetadata.fromMusicMetadata(metadata, true);
-                      }
+    return StreamBuilder(
+      stream: Rx.combineLatest2(
+        musicMetadataBloc.allMusicMetadata,
+        musicPlayerBloc.musicPlayer.shareValueSeeded(null),
+        (SearchModel result, MusicPlayerModel musicPlayer) {
+          if (result.results.length > 0) {
+            return SearchModel(
+                result.resultCount,
+                result.results.map((MusicMetadata metadata) {
+                  if (musicPlayer != null &&
+                      musicPlayer.selectedMusic != null) {
+                    print(
+                        'Selected music ${musicPlayer.selectedMusic?.trackName}');
+                    if (metadata.trackId ==
+                        musicPlayer.selectedMusic?.trackId) {
+                      return MusicMetadata.fromMusicMetadata(metadata, true);
                     }
-                    return metadata;
-                  }).toList());
-            }
-            return result;
-          },
-        ),
-        builder: (context, AsyncSnapshot<SearchModel> snapshot) {
-          if (snapshot.hasData) {
-            return buildList(snapshot);
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
+                  }
+                  return metadata;
+                }).toList());
           }
-          return Center(child: CircularProgressIndicator());
+          return result;
         },
       ),
+      builder: (context, AsyncSnapshot<SearchModel> snapshot) {
+        if (snapshot.hasData) {
+          return buildList(snapshot);
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        }
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 
@@ -75,7 +67,6 @@ class MusicListState extends State<MusicList> {
       itemCount: snapshot.data.results.length,
       itemBuilder: (BuildContext context, int index) => ListTile(
         onTap: () {
-          print('Tapped at index $index');
           musicPlayerBloc.updateSelectedMusic(results[index]);
         },
         leading: Image.network(results[index].artworkUrl, fit: BoxFit.contain),
