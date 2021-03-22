@@ -11,7 +11,7 @@ class SearchApiProvider {
 
   Future<SearchModel> fetchMusicList(String term, String attribute) async {
     print('Fetching music list $term');
-    final response = await client.get(
+    final response = await this.client.get(
         Uri.https(hostname, '/search', {
           'country': 'ID',
           'media': 'music',
