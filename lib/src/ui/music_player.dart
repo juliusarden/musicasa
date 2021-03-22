@@ -42,20 +42,38 @@ class MusicPlayerState extends State<MusicPlayer> {
       builder: (context, AsyncSnapshot<MusicPlayerModel> snapshot) {
         if (snapshot.data != null) {
           return Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            child: Column(
               children: [
-                IconButton(
-                  icon: Icon(Icons.fast_rewind),
-                  onPressed: () => buttonPressed('Rewind button pressed'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Now Playing: ${snapshot.data.selectedMusic.trackName}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.play_arrow),
-                  onPressed: () => buttonPressed('Play button pressed'),
-                ),
-                IconButton(
-                  icon: Icon(Icons.fast_forward),
-                  onPressed: () => buttonPressed('Forward button pressed'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.fast_rewind),
+                      onPressed: () => buttonPressed('Rewind button pressed'),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.play_arrow),
+                      onPressed: () => buttonPressed('Play button pressed'),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.fast_forward),
+                      onPressed: () => buttonPressed('Forward button pressed'),
+                    ),
+                  ],
                 ),
               ],
             ),
