@@ -86,3 +86,9 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/icon/icon.jpg
+    - assets/images/Musicasa_Afgan.jpg
+    - assets/images/Musicasa_DefaultArtist.jpg
+    - assets/images/Musicasa_JuliusNowPlaying.jpg
+    - assets/images/Musicasa_NowPlaying.jpg
+    - assets/images/Musicasa_Raisa.jpg
+    - assets/images/videoRecording.gif
