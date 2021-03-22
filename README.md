@@ -1,16 +1,29 @@
 # musicasa
 
-A new Flutter project.
+A simple music list app that pulls music metadata from Apple itunes.
 
-## Getting Started
+When app is started, it will show the tracks by 'Afgan'.
+The default artist is curerntly set to 'Afgan'.
+There is 500ms debounce on search term before we hit the Apple Itunes API.
 
-This project is a starting point for a Flutter application.
+When you select a track:
+- The green 'Music' icon is shown next to the track you have selected
+- The music player at the bottom will pop up. Currently it does not do anything other than showing toast message when the button is pressed.
 
-A few resources to get you started if this is your first Flutter project:
+## To start the project
+Make sure you have flutter installed on your environment. See flutter.dev to find instruction on how to install flutter.
+- Navigate to the project on terminal
+- run `flutter pub get`
+- run `flutter run` (or specify your device)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## State Management
+This project state management is using BLoC concept with RxDart.
+Project structure:
+- lib:
+  -  main.dart <- entry point / runApp()
+  - src:
+    - blocs <- BLoC publisher
+    - models <- type of data parsed across classes
+    - resources <- files where API calls is made
+    - ui <- All custom widgets
+- test: <- Test files are located here. As limited time, I only implemented few test cases.
