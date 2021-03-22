@@ -7,6 +7,7 @@ import '../models/search_model.dart';
 class SearchApiProvider {
   Client client = Client();
   String hostname = 'itunes.apple.com';
+  SearchApiProvider({this.client});
 
   Future<SearchModel> fetchMusicList(String term, String attribute) async {
     print('Fetching music list $term');
